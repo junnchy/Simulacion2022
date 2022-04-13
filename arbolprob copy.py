@@ -34,8 +34,6 @@ def main():
     
     df2.loc['Total'] = df2['f_r'].sum()
 
-    df2['Group'] = df2['Group'].map(df.set_index('probabilidad'))
-
     print(df2)
     print(df)
 
