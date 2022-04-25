@@ -7,15 +7,33 @@ from itertools import islice
 
 
 def main():
-    metodosCuadrados(10000)
-    generate_gcl_rand(100)
+    
+
+    #Metodo de los Cuadrados con test
+    #metodosCuadrados(10000)
+    #chitest("m2_output.txt",10000)
+    #kstest("m2_output.txt")
+    #test_de_independencia("m2_output.txt",10000)
+    #test_de_autocorrelacion("m2_output.txt",10000)
+
+    #Metodo de GCL Rand
+    #generate_gcl_rand(10000)
+    #chitest("lgc_rand_output.txt",10000)
+    #kstest("lgc_rand_output.txt")
+    #test_de_independencia("lgc_rand_output.txt",10000)
+    #test_de_autocorrelacion("lgc_rand_output.txt",10000)
+
+    #Metodo de GCL Randu
     generate_gcl_randu(10000)
-    python_rand(100)
-    chitest("lgc_RANDU_output.txt", 10000)
-    chitest("m2_output.txt",10000)
+    chitest("lgc_RANDU_output.txt",10000)
     kstest("lgc_RANDU_output.txt")
-    test_de_independencia("lgc_RANDU_output.txt", 10000)
-    test_de_autocorrelacion("lgc_RANDU_output.txt", 10000)
+    test_de_independencia("lgc_RANDU_output.txt",10000)
+    test_de_autocorrelacion("lgc_RANDU_output.txt",10000)
+
+    #generate_gcl_rand(100)
+    #generate_gcl_randu(10000)
+    #python_rand(10000)
+    #chitest("lgc_RANDU_output.txt", 10000)
 
 ###########################
 ###BLOQUE DE GENERADORES###
@@ -33,7 +51,7 @@ def metodosCuadrados(num_iterations):
     #while number not in already_seen:
     for i in range(num_iterations):
         #counter += 1
-        #already_seen.add(number)
+        already_seen.add(number)
         number = int(str(number * number).zfill(8)[2:6])  # zfill adds padding of zeroes
         #print(f"#{counter}: {number}")
         aux = number/10000
@@ -42,11 +60,11 @@ def metodosCuadrados(num_iterations):
     
     outFile.close()
 
-    """  
-        print(f"Empezamos con{seed_number} y"
-        f" el bloque se repite despues de {counter} pasos"
-        f" con {number}.")
-    """
+     
+    """ print(f"Empezamos con{seed_number} y"
+    f" el bloque se repite despues de {counter} pasos"
+    f" con {number}.") """
+   
 
 
 def generate_gcl_rand( num_iterations ):
@@ -73,7 +91,7 @@ def generate_gcl_rand( num_iterations ):
         counter += 1
 
     outFile.close()
-    print("Successfully stored " + str(num_iterations) + " random numbers in file named: 'lgc_output.txt'.")
+    print("Se guardaron correctamente " + str(num_iterations) + " numeros aleatorios en el archivo: 'lgc_output.txt'.")
 
 
 def generate_gcl_randu(num_iterations):
@@ -108,7 +126,7 @@ def generate_gcl_randu(num_iterations):
         counter +=1
 
     outFile.close()
-    print ("Successfully stored " + str(num_iterations) + " random numbers in file named: 'lgc_RANDU_output.txt'.")
+    print ("Se guardaron correctamente " + str(num_iterations) + " numeros aleatorios en el arechivo: 'lgc_RANDU_output.txt'.")
 
 
 def python_rand( num_iterations ):
@@ -137,7 +155,7 @@ def python_rand( num_iterations ):
         counter = counter + 1
 
      outFile.close()
-     print("Successfully stored" + str(num_iterations) + "random numbers in file named: 'py_random_output.txt'.")
+     print("Se guardaron correctamente" + str(num_iterations) + "numeros aleatorios en el arechivo: 'py_random_output.txt'.")
 
 ####################
 ###BLOQUE DE TEST###
@@ -181,6 +199,10 @@ def chitest(input_file, number_observations):
     chi_sq_significance_test( chi_sq_result, 0.8 )
     chi_sq_significance_test( chi_sq_result, 0.9 )
     chi_sq_significance_test( chi_sq_result, 0.95 )
+
+    df = pd.DataFrame(list(data_points.items()),columns = ['numero','cantidad']) 
+
+    print(df)
 
 def chi_square_uniformity_test( data_set, confidence_level, num_samples ):
     """
@@ -266,7 +288,7 @@ def kolmogorov_smirnov_test( data_set, confidence_level, num_samples ):
 def test_de_independencia(input_file, number_observations):
     print ("---------RUNS_TEST-----------")
     runs_test_result = runs_test_for_independence( input_file, number_observations )
-    print ("Runs Test Result Z-Score: " + str(runs_test_result))
+    print ("Resultado de ejecucion Z-Score: " + str(runs_test_result))
     print ("")
     z_score_lookup(runs_test_result, 0.8, two_sided=True)
     z_score_lookup(runs_test_result, 0.9, two_sided=True)
@@ -344,52 +366,52 @@ def runs_test_for_independence( data_file, num_samples ):
     # And we can use the mean & variance to calculate the Z-Test statistic
     z_statistic = ( (numRuns - mean) / np.sqrt(variance) )
 
-    print ("Number of runs: " + str(numRuns))
+    print ("Numero de Ejecuciones: " + str(numRuns)+ " \\")
 
     return z_statistic
 
 #Test de Autocorrelacion
 def test_de_autocorrelacion(input_file,number_observations):
-    print ("---------AUTO-CORRELATION_TESTS-----------")
+    print ("---------TEST DE AUTOCORRELACION-----------\\")
     auto_test_result = autocorrelation_tests(input_file, number_observations, 2 )
-    print ("==== Auto-correlation Test Result for GAP SIZE=2:  " + str(auto_test_result))
+    print ("==== Resutado de test de autocorrelacion para el tamaño de espacio=2: " + str(auto_test_result)+ " \\")
 
     z_score_lookup(auto_test_result, 0.8, two_sided=True)
     z_score_lookup(auto_test_result, 0.9, two_sided=True)
     z_score_lookup(auto_test_result, 0.95, two_sided=True)
     print ("")
-    print ("       ===== END GAPSIZE=2 =====")
+    print ("       ===== FIN TAMAÑO DE ESPACIO =2 ===== \\")
     print ("")
     print ("")
     auto_test_result = autocorrelation_tests(input_file, number_observations, 3 )
-    print ("=== Auto-correlation Test Result for GAP SIZE=3: " + str(auto_test_result))
+    print ("=== Resutado de test de autocorrelacion para el tamaño de espacio=3: " + str(auto_test_result)+ " \\")
     z_score_lookup(auto_test_result, 0.8, two_sided=True)
     z_score_lookup(auto_test_result, 0.9, two_sided=True)
     z_score_lookup(auto_test_result, 0.95, two_sided=True)
     print ("")
-    print ("       ===== END GAPSIZE=3 =====")
+    print ("       ===== FIN TAMAÑO DE ESPACIO=3 =====\\")
     print ("")
     print ("")
     auto_test_result = autocorrelation_tests(input_file, number_observations, 5 )
-    print (" === Auto-correlation Test Result for GAP SIZE=5: " + str(auto_test_result))
+    print (" === Resutado de test de autocorrelacion para el tamaño de espacio=5: " + str(auto_test_result)+ " \\")
     z_score_lookup(auto_test_result, 0.8, two_sided=True)
     z_score_lookup(auto_test_result, 0.9, two_sided=True)
     z_score_lookup(auto_test_result, 0.95, two_sided=True)
     print ("")
-    print ("       ===== END GAPSIZE=5 =====")
+    print ("       ===== FIN TAMAÑO DE ESPACIO=5 =====\\")
     print ("")
     print ("")
     auto_test_result = autocorrelation_tests(input_file, number_observations, 50 )
-    print ("Auto-correlation Test Result for GAP SIZE=50: " + str(auto_test_result))
+    print ("Resutado de test de autocorrelacion para el tamaño de espacio=50: " + str(auto_test_result)+ " \\")
     z_score_lookup(auto_test_result, 0.8, two_sided=True)
     z_score_lookup(auto_test_result, 0.9, two_sided=True)
     z_score_lookup(auto_test_result, 0.95, two_sided=True)
     print ("")
-    print ("       ===== END GAPSIZE=50 =====")
+    print ("       ===== FIN TAMAÑO DE ESPACIO=50 ===== \\")
     print ("")
     print ("")
     print ("")
-    print ("=-=-=-======= END TEST SUITE ======-=-=-=-=")
+    print ("=-=-=-======= END TEST SUITE ======-=-=-=-= \\")
     print ("")
 
 def autocorrelation_tests( data_file, num_samples, gap_sequence ):
@@ -460,7 +482,7 @@ def chi_sq_significance_test( chi_sq, signif_level):
     :param signif_level: Level of significance we are testing: 0.80, 0.90, or 0.95
     :return: message stating whether we accept or reject null
     """
-    result = "Error al Rechazar la Hipotesis Nula"
+    result = "Aprueba la Hipotesis Nula"
     crit_value = 0.0
     if signif_level == 0.8:
         crit_value = 10118.8246
@@ -474,11 +496,11 @@ def chi_sq_significance_test( chi_sq, signif_level):
     if chi_sq > crit_value:
         result = "Se Rechaza la Hipotesis Nula"
 
-    print ("Print Significance Level: " + str(signif_level))
-    print ("Chi Sq: " + str(chi_sq))
-    print ("Valor Critico: " + str(crit_value))
-    print ("Resultado: " + result)
-    print ("....................................")
+    print ("Print Significance Level: " + str(signif_level)+ " \\")
+    print ("Chi Sq: " + str(chi_sq)+ " \\")
+    print ("Valor Critico: " + str(crit_value)+ " \\")
+    print ("Resultado: " + result+ " \\")
+    print ("....................................\\")
 
     return result
 
@@ -491,7 +513,7 @@ def ks_significance_test( d_statistic, num_observations, alpha_level ):
     :param alpha_level: The level of significance we are testing
     :return: result -- accept or reject
     """
-    result = "No se puede Rechazar la Hipotesis Nula"
+    result = "Aprueba la Hipotesis Nula"
     critical_value = 0
 
 
@@ -506,11 +528,11 @@ def ks_significance_test( d_statistic, num_observations, alpha_level ):
 
     if d_statistic > critical_value:
         result = "Se rechaza la Hipotesis Nula"
-    print ("Alpha Level: " + str(alpha_level))
-    print ("D_statistic: " + str(d_statistic))
-    print ("Valor Critico: " + str(critical_value))
-    print ("Resultado: " + result)
-    print ("............................")
+    print ("Alpha Level: " + str(alpha_level)+ " \\")
+    print ("D_statistic: " + str(d_statistic)+ " \\")
+    print ("Valor Critico: " + str(critical_value)+ " \\")
+    print ("Resultado: " + result+ " \\")
+    print ("............................\\")
 
     return result
 
@@ -522,7 +544,7 @@ def z_score_lookup( z_score, significance_level, two_sided=True):
     :return: String detailing our result
     """
 
-    result = "FAIL TO REJECT null hypothesis"
+    result = "Aprueba la Hipotesis Nula"
     critical_value = 0.0
     confidence_80 = 1.282
     confidence_90 = 1.645
@@ -556,18 +578,18 @@ def z_score_lookup( z_score, significance_level, two_sided=True):
      #  z_score = z_score * (-1)
 
     if ( two_sided and ( z_score <= neg_crit_value) or (critical_value <= z_score ) ):
-        result = "REJECT null hypothesis"
+        result = "Se Rechaza la Hipotesis Nula \\"
 
     if ( not two_sided and z_score >= critical_value or z_score <= neg_crit_value):
-        result = "REJECT null hypothesis"
+        result = "Se Rechaza la Hipotesis Nula \\"
 
-    print ("Z score is: " + str(z_score))
-    print ("Significance level is: " + str(significance_level))
-    print ("Critical value is: " +str(critical_value))
-    print ("Running two sided z-score lookup? -->" + str(two_sided))
-    print ("")
-    print ("Result is: " + result)
-    print (".....................................")
+    print ("Z score es: " + str(z_score)+ " \\")
+    print ("Significance level is: " + str(significance_level)+ " \\")
+    print ("Critical value is: " +str(critical_value)+ " \\")
+    #print ("Running two sided z-score lookup? -->" + str(two_sided))
+    #print ("")
+    print ("El resultado es: " + result+ " \\")
+    print ("..................................... \\")
 
     return result
 
@@ -588,6 +610,7 @@ def divide_RNG_data_into_10_equal_subdivisions_and_count( data_file ):
     :return: A dictionary with counts of how many occurrences our data had for each
     of 10 equal intervals between [0, 1). (Divided into 10ths)
     """
+    bm2 =[]
     # For each of our uniformity tests, need to divide our data points in 10 equal subdivisions
     subdivisions = {  "1":  0,
                       "2":  0,
@@ -608,24 +631,34 @@ def divide_RNG_data_into_10_equal_subdivisions_and_count( data_file ):
         num = float(num)
         if num < 0.1:
             subdivisions["1"] += 1
+            bm2.append(1)
         elif num < 0.2:
             subdivisions["2"] += 1
+            bm2.append(2)
         elif num < 0.3:
             subdivisions["3"] += 1
+            bm2.append(3)
         elif num < 0.4:
             subdivisions["4"] += 1
+            bm2.append(4)
         elif num < 0.5:
             subdivisions["5"] += 1
+            bm2.append(5)
         elif num < 0.6:
             subdivisions["6"] += 1
+            bm2.append(6)
         elif num < 0.7:
             subdivisions["7"] += 1
+            bm2.append(7)
         elif num < 0.8:
             subdivisions["8"] += 1
+            bm2.append(8)
         elif num < 0.9:
             subdivisions["9"] += 1
+            bm2.append(9)
         elif num < 1.0:
             subdivisions["10"] += 1
+            bm2.append(10)
 
     print('Nombre del archivo:', data_file)
     
