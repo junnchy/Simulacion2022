@@ -8,32 +8,38 @@ from itertools import islice
 
 def main():
     
+    """ Descomentar con seleccionando el fragmento de codigo que se quiere ejecutar y precinar CTRL+SHIFT+A para descomentar Bloque  """
 
     #Metodo de los Cuadrados con test
-    #metodosCuadrados(10000)
-    #chitest("m2_output.txt",10000)
-    #kstest("m2_output.txt")
-    #test_de_independencia("m2_output.txt",10000)
-    #test_de_autocorrelacion("m2_output.txt",10000)
+    metodosCuadrados(10000)
+    chitest("m2_output.txt",10000)
+    kstest("m2_output.txt")
+    test_de_independencia("m2_output.txt",10000)
+    test_de_autocorrelacion("m2_output.txt",10000)
 
     #Metodo de GCL Rand
-    #generate_gcl_rand(10000)
-    #chitest("lgc_rand_output.txt",10000)
-    #kstest("lgc_rand_output.txt")
-    #test_de_independencia("lgc_rand_output.txt",10000)
-    #test_de_autocorrelacion("lgc_rand_output.txt",10000)
+    """ generate_gcl_rand(10000)
+    chitest("lgc_rand_output.txt",10000)
+    kstest("lgc_rand_output.txt")
+    test_de_independencia("lgc_rand_output.txt",10000)
+    test_de_autocorrelacion("lgc_rand_output.txt",10000) """
 
     #Metodo de GCL Randu
-    generate_gcl_randu(10000)
+    """ generate_gcl_randu(10000)
     chitest("lgc_RANDU_output.txt",10000)
     kstest("lgc_RANDU_output.txt")
     test_de_independencia("lgc_RANDU_output.txt",10000)
-    test_de_autocorrelacion("lgc_RANDU_output.txt",10000)
+    test_de_autocorrelacion("lgc_RANDU_output.txt",10000) """
 
-    #generate_gcl_rand(100)
-    #generate_gcl_randu(10000)
-    #python_rand(10000)
-    #chitest("lgc_RANDU_output.txt", 10000)
+
+    #Metodo Random de Python
+    """ python_rand(10000)
+    chitest("py_random_output.txt",10000)
+    kstest("py_random_output.txt")
+    test_de_independencia("py_random_output.txt",10000)
+    test_de_autocorrelacion("py_random_output.txt",10000)  """
+
+    
 
 ###########################
 ###BLOQUE DE GENERADORES###
@@ -597,6 +603,22 @@ def z_score_lookup( z_score, significance_level, two_sided=True):
 ###FUNCIONES DE SOPORTE###
 ##########################
 
+def bit_map(data_file):
+    
+    tam_x=300
+    tam_y=300
+    corrida=[]
+    for i in range(0,tam_y):
+        random_nros=[]
+        for r in range(300):
+            random_nros.append(np.random.randint(0,300))
+        corrida.append(random_nros)
+
+
+    plt.imshow(corrida, cmap='gist_gray', interpolation='nearest')
+
+    plt.show()
+
 
 def divide_RNG_data_into_10_equal_subdivisions_and_count( data_file ):
     """
@@ -679,6 +701,7 @@ def divide_RNG_data_into_10_equal_subdivisions_and_count( data_file ):
     plt.xlabel('Intervalos de Datos')
     plt.ylabel('Cantidades de Datos por Intervalo')
     plt.show()
+
 
     return subdivisions
 
