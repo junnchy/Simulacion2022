@@ -3,61 +3,60 @@ import random as rnd
 import matplotlib.pyplot as plt
 import numpy as np
 import scipy.stats
-
-
+import scipy.special as sps
 
 def main():
 
-    ng = 10000 #ng = numeros generados
+    ng = 10000 #ng = numeros generados largo de los arreglos
 
     #uniforme
-    array = generarValores01(ng)[0]
+    array = []
+    x = 0
+    for i in range(ng):
+        z = rnd.random()
+        array.append(z)
+        x += z
+    prom = x/ng
     plt.hist(array,20)
     plt.xlabel('Intervalos de Datos')
     plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.axhline(y=prom, color='r', linestyle='-')
     plt.show()
 
     #exponencial
-    sum=0
-    arr=[]
-    for i in range(ng):
-        num=distr_exponencial(10)
-        arr.append(num)
-        sum=sum+num
-    plt.hist(arr,25)
-    plt.show() 
-    pruebaexp()
+    exponencial(ng, 2)
+    prueba_exp(ng, 2)
 
     #Gamma
     sum=0
     arr=[]
-    for i in range(10000):
-        num=distribucion_gamma(10000,50)
+    for i in range(ng):
+        num=distribucion_gamma(10000,0.5)
         arr.append(num)
-
     plt.hist(arr,20)
+    plt.title('Distribucion Gamma con ' + ng + ' numeros generados')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
     plt.show()
 
     #Normal
     sum=0
     arr2=[]
-    for i in range(10000):
+    for i in range(ng):
         num=distribucion_normal(10,5)
         arr2.append(num)
 
     plt.hist(arr2,20)
     plt.show()
 
-    #Pascal
+    #poison
     sum=0
     arr2=[]
-    for i in range(10000):
-        num=distribucion_pascal(10,2)
+    for i in range(ng):
+        num=distribucion_poisson(2)
         arr2.append(num)
-
     plt.hist(arr2,20)
     plt.show()
-
 
 
 
@@ -70,31 +69,75 @@ def distribucion_uniforme(a, b, datos):
         aux.append(a + (b - a) * r)
     uniformidad(aux)
 
+def uniforme(ng):
+    array = []
+    x = 0
+    for i in range(ng):
+        z = rnd.random()
+        array.append(z)
+        x += z
+    prom = x/ng
+    plt.hist(array,20)
+    plt.xlabel('Intervalos de Datos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.axhline(y=prom, color='r', linestyle='-')
+    plt.show()
+
 def distr_exponencial(ex):
     r=np.random.rand()
     x=-ex*np.log(r)
     return x
 
+def exponencial(ng, ex):
+    sum=0
+    arr=[]
+    for i in range(ng):
+        num=distr_exponencial(ex)
+        arr.append(num)
+        sum=sum+num
+    plt.hist(arr,25)
+    plt.title('Exponencial por funcion inversa')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show() 
 
-def distribucion_exponencial(rnd, ex):
-	r = rnd()
-	return -ex * (math.log(r))
-
-#REVISAR
 def distribucion_gamma(k, a):
-    tr=1.0
-    for i in range(1,k):
-        #r=distr_exponencial(10)
+    #a = EX
+    tr= 1.0
+    for i in range(k+1):
         r=np.random.rand()
-        tr= tr*r
-    x=-(np.log(r))/a
+        tr*=r
+    x=-(np.log(tr))/a
     return x
+
+def gamma(k,a):
+    arr=[]
+    for i in range(k+1):
+        num = distribucion_gamma(k,a)
+        arr.append(num)
+    print(arr)
+    plt.hist(arr,25)
+    plt.title('Distribucion Gamma con ' + str(k) +' numeros generados')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show()
 
 def distribucion_normal(ex, stdx):
 	suma = 0
 	for i in range(12):
 		suma += np.random.rand()
 	return stdx * (suma - 6) + ex
+
+def normal(ng, ex, stdx):
+    arr2=[]
+    for i in range(ng):
+        num=distribucion_normal(ex,stdx)
+        arr2.append(num)
+    plt.hist(arr2,20)
+    plt.title('D. Normal por funcion inversa')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show()
 
 
 def distribucion_pascal(k, q):
@@ -104,13 +147,21 @@ def distribucion_pascal(k, q):
 	return math.log(tr) / math.log(q)
 
 
-def distribucion_binomial(rnd, n, p):
+def distribucion_binomial(n, p):
 	x = 0
 	for i in range(n):
-		r = rnd()
+		r = np.random.rand()
 		if (r - p) <= 0:
 			x+=1
 	return x
+
+def binomial(ng, a, b):
+    arr2=[]
+    for i in range(ng):
+        num=distribucion_binomial(a, b)
+        arr2.append(num)
+    plt.hist(arr2,20)
+    plt.show()
 
 
 def distribucion_hipergeometrica(rnd,tn, ns, p):
@@ -127,23 +178,30 @@ def distribucion_hipergeometrica(rnd,tn, ns, p):
 	return x
 
 
-def distribucion_poisson(rnd, p):
+def distribucion_poisson(p):
 	x = 0
 	b = math.exp(-p)
 	tr = 1
 	aux = True
 	while aux:
-		tr *= rnd()
+		tr *= np.random.rand()
 		if (tr - b) >= 0:
 			x +=1
 		else:
 			aux = False
 	return x
 
-def varianza():
-    pass
-def esperanza():
-    pass
+def poisson(ng, p):
+    arr2=[]
+    for i in range(ng):
+        num=distribucion_poisson(p)
+        arr2.append(num)
+    plt.hist(arr2,20)
+    plt.title('Poisson')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show()
+
 
 def generarValores01(cantidad):
     x = []
@@ -156,55 +214,6 @@ def generarValores01(cantidad):
 
 
 def uniformidad( arreglo ):
-    bm2 =[]
-    subdivisions = {  "1":  0,
-                      "2":  0,
-                      "3":  0,
-                      "4":  0,
-                      "5":  0,
-                      "6":  0,
-                      "7":  0,
-                      "8":  0,
-                      "9":  0,
-                      "10": 0   }
-    for num in arreglo:
-        num = float(num)
-        if num < 0.1:
-            subdivisions["1"] += 1
-            bm2.append(1)
-        elif num < 0.2:
-            subdivisions["2"] += 1
-            bm2.append(2)
-        elif num < 0.3:
-            subdivisions["3"] += 1
-            bm2.append(3)
-        elif num < 0.4:
-            subdivisions["4"] += 1
-            bm2.append(4)
-        elif num < 0.5:
-            subdivisions["5"] += 1
-            bm2.append(5)
-        elif num < 0.6:
-            subdivisions["6"] += 1
-            bm2.append(6)
-        elif num < 0.7:
-            subdivisions["7"] += 1
-            bm2.append(7)
-        elif num < 0.8:
-            subdivisions["8"] += 1
-            bm2.append(8)
-        elif num < 0.9:
-            subdivisions["9"] += 1
-            bm2.append(9)
-        elif num < 1.0:
-            subdivisions["10"] += 1
-            bm2.append(10)
-    a = []
-    b = []        
-    for i in range(10):
-        a.append(i+1)
-        aux = str(i+1)
-        b.append(subdivisions[aux])
     plt.hist(arreglo,20)
     plt.xlabel('Intervalos de Datos')
     plt.ylabel('Cantidades de Datos por Intervalo')
@@ -217,59 +226,40 @@ def img(a,b):
     plt.show()
 
 
-def prueba():
-    # Importing the necessary libraries
-    from matplotlib import pyplot as plt
-    import numpy as np
-    import scipy.stats
-
-    dt = np.random.normal(0, 1, 1000)
-
-    # Plotting the sample data on histogram and getting the bins
-    _, bins, _ = plt.hist(dt, 25, density=1, alpha=0.5)
-
-
-    # Getting the mean and standard deviation of the sample data dt
-    mn, std = scipy.stats.norm.fit(dt)
-
-
-    # Getting the best fit curve y values against the x data, bins
-    y_curve = scipy.stats.norm.pdf(bins, mn, std)
-
-    # Plotting the best fit curve
-    plt.plot(bins, y_curve, 'k')
-
-    plt.title('Best fit curve for histogram')
-    plt.xlabel('x-axis')
-    plt.ylabel('y-axis')
-    plt.show()
-
-def pruebaexp():
-    # Importing the necessary libraries
-    from matplotlib import pyplot as plt
-    import numpy as np
-    import scipy.stats
-
-    dt = np.random.exponential(10, 10000)
-
-    # Plotting the sample data on histogram and getting the bins
-    _, bins, _ = plt.hist(dt, 25, density=1, alpha=0.5)
-
-
-    # Getting the mean and standard deviation of the sample data dt
-    mn, std = scipy.stats.norm.fit(dt)
-
-
-    # Getting the best fit curve y values against the x data, bins
-    y_curve = scipy.stats.norm.pdf(bins, mn, std)
-
-    # Plotting the best fit curve
+#--------------------PRUEBAS------------------------------
+def prueba_exp(ng, ex):
+    dt = np.random.exponential(ex, ng)
+    _, bins, _ = plt.hist(dt, 25)
+    y_curve = scipy.stats.expon.pdf(bins)
     plt.plot(y_curve, 'k')
+    plt.title('Numpy Exponencial')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show() 
 
-    plt.title('Best fit curve for histogram')
-    plt.xlabel('x-axis')
-    plt.ylabel('y-axis')
-    plt.show()   
+def prueba_normal(ng, stdx, ex):
+    dt = np.random.normal(ex, stdx, ng)
+    _, bins, _ = plt.hist(dt, 20)
+    y_curve = scipy.stats.norm.pdf(bins)
+    plt.plot(y_curve, 'k')
+    plt.title('Numpy Normal')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show() 
 
+def prueba_poisson(ng, lam):
+    dt = np.random.poisson(lam, ng) 
+    count, bins, ignored = plt.hist(dt, 20, density=True)
+    plt.plot()  
+    plt.title('Numpy Poisson')
+    plt.xlabel('Intervalos')
+    plt.ylabel('Cantidades de Datos por Intervalo')
+    plt.show() 
 
-main()
+def main2():
+    poisson(1000, 10)
+    prueba_poisson(1000,10)
+    
+
+main2()
+
