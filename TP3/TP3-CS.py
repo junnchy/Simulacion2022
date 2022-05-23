@@ -100,7 +100,7 @@ def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola,
         if len(cola) <= 1:
             b_t += (reloj-evento_actual[1])*estado_servidor
         else:
-            b_t +=(reloj - cola[len(cola)-2][1])*estado_servidor
+            b_t +=(reloj - cola[-1][1])*estado_servidor
             
     else: #El arribo encuentra al servidor desocupado
         cli_comp_dem_cola += 1
@@ -122,6 +122,7 @@ def evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola
         estado_servidor = 0
         prox['d'] = ('d', 999999,0)
     else:
+        aux = evento_actual
         evento_actual = cola[0]
         cli_comp_dem_cola += 1
         cola = cola[1:len(cola)]
@@ -132,7 +133,10 @@ def evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola
         ev = ['d', x, len(lista_de_eventos)]
         lista_de_eventos.append(ev)
         prox['d'] = ev
-        b_t +=(reloj - cola[-1][1])*estado_servidor
+        if len(cola) == 0:
+            b_t +=(reloj - aux[1])*estado_servidor
+        else: 
+            b_t +=(reloj - cola[-1][1])*estado_servidor
     return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t
     
 def genera_random():
