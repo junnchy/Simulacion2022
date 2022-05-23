@@ -15,20 +15,21 @@ def main():
         'd': ('d', 999999,0)
 
     }
-    q_t = []
-    b_t = []
+    q_t = 0
+    b_t = 0
+    demora_total = 0
     cli_comp_dem_cola = 0
     num_cli_cola = 0
     sig_ev = 0
     i = 0
 
     lista_de_eventos.append(evento_actual)
-
+    
     
     #while i < 2:
     for i in range(5):
-        reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola = timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola)
-        reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola = event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola)
+        reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t = timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t)
+        reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t = event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t)
 
         print('reloj ',reloj)
         print(lista_de_eventos)
@@ -38,11 +39,13 @@ def main():
         print('eventos en cola ', cola)
         print('numeros de clientes en cola', num_cli_cola)
         print('clientes que completaron su demora en cola', cli_comp_dem_cola)
+        print('Demora total: ', demora_total)
+        print('b(t)', b_t)
         print('------------------------------------------------------------------------')
     #i += 1
     
 
-def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola):
+def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t):
     if reloj == 0:
         r = genera_random()
         x=-0.70*np.log(r) + reloj
@@ -62,21 +65,21 @@ def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola
         else: 
             reloj = prox['d'][1]
             sig_ev = 'd'
-    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola
+    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t
 
-def event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola):
-    print(evento_actual)
+def event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t):
     if str(evento_actual[0]) != 'l':
         if str(sig_ev) == 'a': #evento arribo
-            reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola = evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola)
+            reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t = evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t)
         else: #evento partida
-            reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola =  evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola)
-    
-    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola
+            reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t =  evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t)
+        """  if evento_actual[2] != 1:
+            b_t += reloj*estado_servidor """
+    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t
 
 
-def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola):
-    print('Ejecuntando Arribo')
+def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t):
+    print('Ejecutando Arribo')
     r = genera_random()
     x=-0.70*np.log(r) + reloj
     ev = ['a', x, len(lista_de_eventos)]
@@ -94,6 +97,11 @@ def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola,
             ev = ['d', x, len(lista_de_eventos)]
             lista_de_eventos.append(ev)
             prox['d'] = ev
+        if len(cola) <= 1:
+            b_t += (reloj-evento_actual[1])*estado_servidor
+        else:
+            b_t +=(reloj - cola[len(cola)-2][1])*estado_servidor
+            
     else: #El arribo encuentra al servidor desocupado
         cli_comp_dem_cola += 1
         evento_actual = prox['a']
@@ -105,28 +113,28 @@ def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola,
             ev = ['d', x, len(lista_de_eventos)]
             lista_de_eventos.append(ev)
             prox['d'] = ev
-    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola
+    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t
 
-def evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola):
+def evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t):
     print('Ejecutando Partida')
     if len(cola) == 0:
+        b_t += (reloj-evento_actual[1])*estado_servidor
         estado_servidor = 0
         prox['d'] = ('d', 999999,0)
     else:
         evento_actual = cola[0]
         cli_comp_dem_cola += 1
         cola = cola[1:len(cola)]
-        #sumar demora en ser atendido
+        demora_total = reloj - evento_actual[1]
         num_cli_cola = len(cola)
         r = genera_random()
         x=-0.66*np.log(r) + reloj
         ev = ['d', x, len(lista_de_eventos)]
         lista_de_eventos.append(ev)
         prox['d'] = ev
-    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola
+        b_t +=(reloj - cola[-1][1])*estado_servidor
+    return reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t
     
-
-
 def genera_random():
     r = rnd.random()
     return r
