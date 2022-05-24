@@ -1,6 +1,7 @@
 from ast import While
 import random as rnd
 import numpy as np
+import matplotlib.pyplot as plt
 
 
 def main():
@@ -33,7 +34,7 @@ def main():
         reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr = event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr)
 
         print('reloj ',reloj)
-        #print('Arreglo reloj: ', relojarr)
+        print('Arreglo reloj: ', relojarr)
         #print(lista_de_eventos)
         print('evento actual ', evento_actual)
         print('estado del servidor', estado_servidor)
@@ -45,8 +46,6 @@ def main():
         print('b(t): ', b_t)
         print('q(t): ', q_t)
         print('------------------------------------------------------------------------')
-    #i += 1
-    
 
 def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr):
     if reloj == 0:
@@ -160,5 +159,25 @@ def genera_partida():
 def genera_arrbo():
     pass
 
+def graf_clicola(relojarr):
+    x = []
+    y = []
+    if len(relojarr) > 1:
+        if len(relojarr) > 1:
+            for i in range(len(relojarr)):
+                if relojarr[i][1] == relojarr[i-1][1]:
+                    x.append(relojarr[i][0])
+                    y.append(relojarr[i][1])
+                else:
+                    if i!= 0:
+                        x.append(relojarr[i-1][0]-0.00001)
+                        y.append(relojarr[i][1])
+                        x.append(relojarr[i][0])
+                        y.append(relojarr[i][1])
+            print(x)
+            print(y)
+            plt.plot(x,y)
+            plt.title('Clientes en Cola')
+            plt.show()
 
 main()
