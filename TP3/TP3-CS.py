@@ -28,8 +28,8 @@ def main():
     lista_de_eventos.append(evento_actual)
     
     
-    #while i < 2:
-    for i in range(5):
+    while reloj < 100:
+    #for i in range(5):
         reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr = timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr)
         reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr = event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr)
 
@@ -46,6 +46,9 @@ def main():
         print('b(t): ', b_t)
         print('q(t): ', q_t)
         print('------------------------------------------------------------------------')
+        
+    graf_clicola(relojarr)
+    graf_estadoservidor(relojarr)
 
 def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr):
     if reloj == 0:
@@ -59,7 +62,7 @@ def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola
         sig_ev = 'a'
         cli_comp_dem_cola = 1
     else:
-        relojarr.append([reloj,num_cli_cola])
+        relojarr.append([reloj,num_cli_cola, estado_servidor])
         #el proximo evento es un arribo
         if prox['a'][1] < prox['d'][1]: 
             reloj = prox['a'][1]
@@ -178,6 +181,31 @@ def graf_clicola(relojarr):
             print(y)
             plt.plot(x,y)
             plt.title('Clientes en Cola')
+            plt.xlabel('Tiempo')
+            plt.ylabel('Cantidad de Clientes en cola')
+            plt.show()
+
+def graf_estadoservidor(relojarr):
+    x = []
+    y = []
+    if len(relojarr) > 1:
+        if len(relojarr) > 1:
+            for i in range(len(relojarr)):
+                if relojarr[i][2] == relojarr[i-1][2]:
+                    x.append(relojarr[i][0])
+                    y.append(relojarr[i][2])
+                else:
+                    if i!= 0:
+                        x.append(relojarr[i-1][0]-0.00001)
+                        y.append(relojarr[i][2])
+                        x.append(relojarr[i][0])
+                        y.append(relojarr[i][2])
+            print(x)
+            print(y)
+            plt.plot(x,y)
+            plt.title('Estado del Servidor')
+            plt.xlabel('Tiempo')
+            plt.ylabel('Estado del Servidor')
             plt.show()
 
 main()
