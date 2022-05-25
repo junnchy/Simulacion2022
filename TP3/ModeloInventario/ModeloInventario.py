@@ -13,7 +13,7 @@ costoBacklogItemSetup = 5
 costoReservaItemSetup = 1
 
 class Inventario:
-    
+
     def __init__(self, env, puntoDePedido, tamanioDePedido):
         self.puntoDePedido = puntoDePedido
         self.tamanioDePedido = tamanioDePedido
@@ -21,6 +21,9 @@ class Inventario:
         self.ultimoCambio = 0
         self.costoDeOrden = 0
         self.costoDeEscasez = 0
+        self.deudas = 0
+        self.mant = 0
+        self.pasadas=0
         self.costoDeReserva = 0
         
         #! Iniciar los procesos
@@ -36,16 +39,19 @@ class Inventario:
         yield env.timeout(tiempoLider)
         
         #Actualiza el inventario y los costos 
-        self.ActualizarCosto(env)
+        #self.ActualizarCosto(env)
         self.inventario += unidades
         self.ultimoCambio = env.now
         
     def RevisionInventario(self, env):
         while True:
+            self.pasadas+=1
+            self.ActualizarCosto(env)
             #Crea orden si lo requiere
             if self.inventario <= self.puntoDePedido:
-                unidades = (self.tamanioDePedido + self.puntoDePedido - self.inventario)
+                unidades = (self.tamanioDePedido - self.inventario)
                 env.process(self.CrearOrden(env, unidades))
+
             #Espera al siguiente chequeo
             yield env.timeout(1.0)
             
@@ -53,24 +59,23 @@ class Inventario:
         
         #Actualizar costo por escasez
         if self.inventario <= 0:
-            costoEscazo = (abs(self.inventario) * costoBacklogItemSetup * (env.now - self.ultimoCambio))
+            costoEscazo = (abs(self.inventario) * costoBacklogItemSetup )
             self.costoDeEscasez += costoEscazo
+            self.deudas+=1
         else :
             #Actualizar costo de reserva
-            costoReserva = (self.inventario * costoReservaItemSetup * (env.now - self.ultimoCambio))
+            costoReserva = (self.inventario * costoReservaItemSetup )
+            self.mant+=1
             self.costoDeReserva += costoReserva
             
     def Demandas(self, env):
-        x =0;
         while True:
             #Genera el tamaño y tiempo de la siguiente demanda 
             tiempo = np.random.exponential(indiceDemanda)
             tamanio = np.random.choice(tamanioDemanda, 1, p=probabilidadDemanda)
             yield env.timeout(tiempo)
-            x=x+1
-            print(x)
             #Actualiza el nivel de inventario y costos en funcion de la demanda recibida
-            self.ActualizarCosto(env)
+            #self.ActualizarCosto(env)
             self.inventario -= tamanio[0]
             self.ultimoCambio = env.now
             
@@ -88,7 +93,8 @@ def Ejecutar(largo, puntoDePedido, tamanioDePedido):
     env = simpy.Environment()
     inv = Inventario(env, puntoDePedido, tamanioDePedido)
     env.run(largo)
-    
+    print(inv.deudas)
+    print(inv.mant)
     #Computa y retorna los resultados
     promedioCostosTotales = (inv.costoDeOrden + inv.costoDeReserva + inv.costoDeEscasez) / largo
     promedioCostosOrden = inv.costoDeOrden / largo
@@ -126,6 +132,7 @@ def EjecutarVarios(largo, puntosDePedido, tamaniosDePedido, repeticiones):
             
             #Guarda los resultados
             resultados.append(Ejecutar(largo, i, j))
+            print(resultados)
     return resultados
 
 

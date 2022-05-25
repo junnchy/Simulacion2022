@@ -19,7 +19,7 @@ promedioCfg2= np.mean(configuracion2['CostosTotales'])
 print('Promedio de costo mensual para (20, 60): ', round(promedioCfg1, 2))
 print('Promedio de costo mensual para (60, 80): ', round(promedioCfg2, 2))
 
-grafico.GraficarCajas([configuracion2['CostosTotales']])
+grafico.GraficarCajas(configuracion1['CostosTotales'])
 
 #Extraigo los datos para calcular
 data = [m - n for m,n in zip(configuracion1['CostosTotales'], configuracion2['CostosTotales'])]

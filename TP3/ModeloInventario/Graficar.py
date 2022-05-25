@@ -62,7 +62,7 @@ def GraficarCajas(datos):
         
     #Crear area
     fig, ax = plt.subplots(dpi = 100)
-    ax.set_xticklabels([ '(60, 80)'])
+    ax.set_xticklabels([ '(20, 60)'])
     ax.set_title('Costos promedio de inventario por configuracion')
     ax.set_xlabel('Configuracion (reposicion, tamaño)')
     ax.set_ylabel('Costo promedio mensual')

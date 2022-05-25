@@ -361,7 +361,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[1]]></Code>
+							<Code><![CDATA[3]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653165001641</Id>
@@ -411,7 +411,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[3]]></Code>
+							<Code><![CDATA[1]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653230578168</Id>
@@ -460,7 +460,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[20]]></Code>
+							<Code><![CDATA[80]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653232152541</Id>
@@ -484,7 +484,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[20]]></Code>
+							<Code><![CDATA[60]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653232167260</Id>
@@ -1052,7 +1052,7 @@
 						<Parameter>
 							<Name><![CDATA[probability]]></Name>
 							<Value Class="CodeValue">
-								<Code><![CDATA[1.166666]]></Code>
+								<Code><![CDATA[0.166666]]></Code>
 							</Value>
 						</Parameter>
 						<Parameter>
@@ -1876,7 +1876,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[GastoMensualPedido]]></Title>
+						<Title><![CDATA[Costo por pedido]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-60269</Color>
@@ -1886,7 +1886,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[GastoMensualPorDeuda]]></Title>
+						<Title><![CDATA[Costo por faltante]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset1]]></Expression>
 					<Color>-29696</Color>
@@ -1896,7 +1896,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
 					<DatasetExpression>  
-						<Title><![CDATA[GastoMensualMantenimiento]]></Title>
+						<Title><![CDATA[Costo de mantenimiento ]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset2]]></Expression>
 					<Color>-12799119</Color>
@@ -1905,7 +1905,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<PointStyle>SQUARE</PointStyle>
 						<LineWidth>1.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
+					<SamplesToKeep>120</SamplesToKeep>
 					<TimeWindowExpression><![CDATA[120]]></TimeWindowExpression>
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
@@ -1963,7 +1963,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 					<DrawLine>true</DrawLine>
 					<Interpolation>LINEAR</Interpolation>
 					<DatasetExpression>  
-						<Title><![CDATA[GastoMensualPorDeuda]]></Title>
+						<Title><![CDATA[Costo total]]></Title>
 					<Id>0</Id>
 					<Expression><![CDATA[my_dataset]]></Expression>
 					<Color>-13447886</Color>
@@ -1972,9 +1972,9 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<PointStyle>CIRCLE</PointStyle>
 						<LineWidth>2.0</LineWidth>
 					</DatasetExpression>
-					<SamplesToKeep>100</SamplesToKeep>
-					<TimeWindowExpression><![CDATA[100]]></TimeWindowExpression>
-					<FillAreaUnderLine>false</FillAreaUnderLine>
+					<SamplesToKeep>120</SamplesToKeep>
+					<TimeWindowExpression><![CDATA[120]]></TimeWindowExpression>
+					<FillAreaUnderLine>true</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
     			<TimePlot>
@@ -2104,7 +2104,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 			<ClientAreaTopLeft><X>0</X><Y>0</Y></ClientAreaTopLeft>
 			<CommandLineArguments><![CDATA[]]></CommandLineArguments>
 			<MaximumMemory>512</MaximumMemory>
-			<RandomNumberGenerationType>fixedSeed</RandomNumberGenerationType>
+			<RandomNumberGenerationType>randomSeed</RandomNumberGenerationType>
 			<CustomGeneratorCode>new Random()</CustomGeneratorCode>
 			<SeedValue>1</SeedValue>
 			<SelectionModeForSimultaneousEvents>LIFO</SelectionModeForSimultaneousEvents>
