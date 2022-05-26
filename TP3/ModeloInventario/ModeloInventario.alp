@@ -460,7 +460,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[80]]></Code>
+							<Code><![CDATA[40]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653232152541</Id>
@@ -484,7 +484,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[60]]></Code>
+							<Code><![CDATA[20]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653232167260</Id>
@@ -663,8 +663,8 @@
 					</Points>
 				</Connector>
 				<Connector>
-					<Id>1653233569698</Id>
-					<Name><![CDATA[connector5]]></Name>
+					<Id>1653524171188</Id>
+					<Name><![CDATA[connector7]]></Name>
 					<X>200</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
@@ -696,9 +696,9 @@
 					</Points>
 				</Connector>
 				<Connector>
-					<Id>1653234768777</Id>
-					<Name><![CDATA[connector6]]></Name>
-					<X>0</X><Y>0</Y>
+					<Id>1653524181926</Id>
+					<Name><![CDATA[connector8]]></Name>
+					<X>300</X><Y>670</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -724,8 +724,8 @@
 						<ItemName><![CDATA[out]]></ItemName>
 					</TargetConnectableItemReference>
 					<Points>
-						<Point><X>300</X><Y>670</Y></Point>
-						<Point><X>240</X><Y>670</Y></Point>
+						<Point><X>0</X><Y>0</Y></Point>
+						<Point><X>-60</X><Y>0</Y></Point>
 					</Points>
 				</Connector>
 			</Connectors>
@@ -1434,6 +1434,9 @@
 					<Parameters>
 						<Parameter>
 							<Name><![CDATA[arrivalType]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[self.INTERARRIVAL_TIME]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[rate]]></Name>
@@ -1444,6 +1447,10 @@
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[interarrivalTime]]></Name>
+							<Value Class="CodeUnitValue">
+								<Code><![CDATA[1]]></Code>
+								<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[firstArrivalMode]]></Name>
@@ -1688,9 +1695,15 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onEnter]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[System.out.println("ENTRO");]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onAtExit]]></Name>
+							<Value Class="CodeValue">
+								<Code><![CDATA[System.out.println("SALIO");]]></Code>
+							</Value>
 						</Parameter>
 						<Parameter>
 							<Name><![CDATA[onExit]]></Name>
