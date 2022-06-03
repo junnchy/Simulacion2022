@@ -4,7 +4,7 @@
 	         AnyLogic Project File 
 *************************************************	         
 -->
-<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.11.202204111309" AlpVersion="8.7.3">
+<AnyLogicWorkspace WorkspaceVersion="1.9" AnyLogicVersion="8.7.12.202205250418" AlpVersion="8.7.5">
 <Model>
 	<Id>1652483833845</Id>
 	<Name><![CDATA[ModeloInventario]]></Name>
@@ -113,7 +113,7 @@
 				<Output>
 					<Id>1653250821515</Id>
 					<Name><![CDATA[GastoMensualPromedio]]></Name>
-					<X>1130</X><Y>360</Y>
+					<X>1120</X><Y>610</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -133,7 +133,7 @@
 				<Output>
 					<Id>1653251082136</Id>
 					<Name><![CDATA[GastoMensualPromedioPorPedidos]]></Name>
-					<X>1130</X><Y>400</Y>
+					<X>1120</X><Y>650</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -153,7 +153,7 @@
 				<Output>
 					<Id>1653251111604</Id>
 					<Name><![CDATA[GsatoMensualPRomedioPorMantenimiento]]></Name>
-					<X>1130</X><Y>450</Y>
+					<X>1120</X><Y>700</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -173,7 +173,7 @@
 				<Output>
 					<Id>1653251133506</Id>
 					<Name><![CDATA[GastoMensualPromedioPorEscases]]></Name>
-					<X>1130</X><Y>490</Y>
+					<X>1120</X><Y>740</Y>
 					<Label><X>15</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -182,6 +182,46 @@
 					<UnitType><![CDATA[NONE]]></UnitType>
 					<Value Class="CodeValue">
 						<Code><![CDATA[GastoTotalPorDeuda/120]]></Code>
+					</Value>
+					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1653292800000</ComputationDate>
+				</Output>
+				<Output>
+					<Id>1653594699869</Id>
+					<Name><![CDATA[PromedioClientes]]></Name>
+					<X>1430</X><Y>640</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[double]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[CantidadClientes/120]]></Code>
+					</Value>
+					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
+					<ComputationTimeCode Class="CodeUnitValue">
+						<Code><![CDATA[]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[SECOND]]></Unit>
+					</ComputationTimeCode>
+					<ComputationDate>1653292800000</ComputationDate>
+				</Output>
+				<Output>
+					<Id>1653594700628</Id>
+					<Name><![CDATA[PromedioVentas]]></Name>
+					<X>1430</X><Y>700</Y>
+					<Label><X>15</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Type><![CDATA[double]]></Type>
+					<UnitType><![CDATA[NONE]]></UnitType>
+					<Value Class="CodeValue">
+						<Code><![CDATA[ventas/120]]></Code>
 					</Value>
 					<ComputationMoment>ON_SIMULATION_END</ComputationMoment>
 					<ComputationTimeCode Class="CodeUnitValue">
@@ -348,6 +388,18 @@
 						<Type><![CDATA[int]]></Type>        
 					</Properties>
 				</Variable>
+				<Variable Class="PlainVariable">
+					<Id>1653594560842</Id>
+					<Name><![CDATA[ventas]]></Name>
+					<X>480</X><Y>170</Y>
+					<Label><X>10</X><Y>0</Y></Label>
+					<PublicFlag>false</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>true</ShowLabel>
+					<Properties SaveInSnapshot="true" Constant="false" AccessType="public" StaticVariable="false">
+						<Type><![CDATA[double]]></Type>        
+					</Properties>
+				</Variable>
 				<Variable Class="Parameter">
 					<Id>1653165001643</Id>
 					<Name><![CDATA[CostoUnitario]]></Name>
@@ -450,7 +502,7 @@
 				<Variable Class="Parameter">
 					<Id>1653232152543</Id>
 					<Name><![CDATA[StockMax]]></Name>
-					<X>100</X><Y>170</Y>
+					<X>100</X><Y>200</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -460,7 +512,7 @@
 						<UnitType><![CDATA[NONE]]></UnitType>
 						<SdArray>false</SdArray>
 						<DefaultValue Class="CodeValue">
-							<Code><![CDATA[40]]></Code>
+							<Code><![CDATA[60]]></Code>
 						</DefaultValue>
 						<ParameterEditor>
 							<Id>1653232152541</Id>
@@ -474,7 +526,7 @@
 				<Variable Class="Parameter">
 					<Id>1653232167262</Id>
 					<Name><![CDATA[StockMin]]></Name>
-					<X>100</X><Y>200</Y>
+					<X>100</X><Y>170</Y>
 					<Label><X>10</X><Y>0</Y></Label>
 					<PublicFlag>false</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1059,7 +1111,7 @@
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[Stock=Stock-1;
-]]></Code>
+ventas=ventas+1;]]></Code>
 							</Value>
 						</Parameter>
 					</Parameters>
@@ -1138,7 +1190,7 @@
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[Stock=Stock-2;
-]]></Code>
+ventas=ventas+2;]]></Code>
 							</Value>
 						</Parameter>
 					</Parameters>
@@ -1217,7 +1269,7 @@
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[Stock=Stock-3;
-]]></Code>
+ventas=ventas+3;]]></Code>
 							</Value>
 						</Parameter>
 					</Parameters>
@@ -1296,7 +1348,7 @@
 							<Name><![CDATA[onExit]]></Name>
 							<Value Class="CodeValue">
 								<Code><![CDATA[Stock=Stock-4;
-]]></Code>
+ventas=ventas+4;]]></Code>
 							</Value>
 						</Parameter>
 					</Parameters>
@@ -1857,15 +1909,15 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>400</Width>
-					<Height>300</Height>
+					<Width>470</Width>
+					<Height>280</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>30</XOffset>
 						<YOffset>20</YOffset>
-						<Width>350</Width>
-						<Height>210</Height>
+						<Width>420</Width>
+						<Height>190</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -1926,7 +1978,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
     			<TimePlot>
 					<Id>1653249862302</Id>
 					<Name><![CDATA[plot2]]></Name>
-					<X>1080</X><Y>20</Y>
+					<X>640</X><Y>280</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -1944,15 +1996,15 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 						<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
 					</RecurrenceCode>
 					<EmbeddedIcon>false</EmbeddedIcon>
-					<Width>400</Width>
-					<Height>260</Height>
+					<Width>820</Width>
+					<Height>280</Height>
 					<BackgroundColor/>
 					<BorderColor/>
 					<ChartArea>
 						<XOffset>50</XOffset>
 						<YOffset>20</YOffset>
-						<Width>320</Width>
-						<Height>180</Height>
+						<Width>740</Width>
+						<Height>200</Height>
 						<BackgroundColor>-1</BackgroundColor>
 						<BorderColor>-16777216</BorderColor>
 						<GridColor>-12566464</GridColor>
@@ -1993,7 +2045,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
     			<TimePlot>
 					<Id>1653250995492</Id>
 					<Name><![CDATA[plot1]]></Name>
-					<X>680</X><Y>320</Y>
+					<X>660</X><Y>540</Y>
 					<Label><X>0</X><Y>-10</Y></Label>
 					<PublicFlag>true</PublicFlag>
 					<PresentationFlag>true</PresentationFlag>
@@ -2057,6 +2109,72 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 					<FillAreaUnderLine>false</FillAreaUnderLine>
 					<LabelFormat>MODEL_TIME_UNITS</LabelFormat>
     			</TimePlot>
+    			<PieChart>
+					<Id>1654110962423</Id>
+					<Name><![CDATA[chart]]></Name>
+					<X>1480</X><Y>80</Y>
+					<Label><X>0</X><Y>-10</Y></Label>
+					<PublicFlag>true</PublicFlag>
+					<PresentationFlag>true</PresentationFlag>
+					<ShowLabel>false</ShowLabel>
+					<DrawMode>SHAPE_DRAW_2D3D</DrawMode>
+					<AutoUpdate>true</AutoUpdate>
+					<OccurrenceAtTime>true</OccurrenceAtTime>
+					<OccurrenceDate>1654156800000</OccurrenceDate>
+					<OccurrenceTime Class="CodeUnitValue">
+						<Code><![CDATA[0]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+					</OccurrenceTime>
+					<RecurrenceCode Class="CodeUnitValue">
+						<Code><![CDATA[1]]></Code>
+						<Unit Class="TimeUnits"><![CDATA[MONTH]]></Unit>
+					</RecurrenceCode>
+					<EmbeddedIcon>false</EmbeddedIcon>
+					<Width>340</Width>
+					<Height>290</Height>
+					<BackgroundColor/>
+					<BorderColor/>
+					<ChartArea>
+						<XOffset>60</XOffset>
+						<YOffset>10</YOffset>
+						<Width>220</Width>
+						<Height>220</Height>
+						<BorderColor/>
+						<GridColor>-12566464</GridColor>
+					</ChartArea>
+					<Legend>
+						<Place>SOUTH</Place>
+						<TextColor>-16777216</TextColor>
+						<Size>40</Size>
+					</Legend>
+					<Labels>
+						<HorLabelsPosition>DEFAULT</HorLabelsPosition>
+						<VerLabelsPosition>DEFAULT</VerLabelsPosition>
+						<TextColor>-12566464</TextColor>
+					</Labels>
+					<ShowLegend>true</ShowLegend>
+					<DataItem>
+					<Id>0</Id>
+					<Expression><![CDATA[GastoTotalPorDeuda/120]]></Expression>
+					<Color>-23296</Color>
+					<Expression2Flag>true</Expression2Flag>
+						<Title><![CDATA[Costo por escasez ]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>0</Id>
+					<Expression><![CDATA[GastoTotalPedido/120]]></Expression>
+					<Color>-16777088</Color>
+					<Expression2Flag>true</Expression2Flag>
+						<Title><![CDATA[Costo por pedidos]]></Title>
+					</DataItem>
+					<DataItem>
+					<Id>0</Id>
+					<Expression><![CDATA[GastoTotalMantenimiento/120]]></Expression>
+					<Color>-16744448</Color>
+					<Expression2Flag>true</Expression2Flag>
+						<Title><![CDATA[Costo por mantenimiento]]></Title>
+					</DataItem>
+    			</PieChart>
 			</Presentation>
 
 				</Level>
@@ -2170,7 +2288,7 @@ GastoTotal=GastoTotalPorDeuda+GastoTotalMantenimiento+GastoTotalPedido
 			</Parameters>			
 			<PresentationProperties>
 				<EnableZoomAndPanning>true</EnableZoomAndPanning>
-				<ExecutionMode><![CDATA[realTimeScaled]]></ExecutionMode>
+				<ExecutionMode><![CDATA[virtualTime]]></ExecutionMode>
 				<Title><![CDATA[ModelPrueba : Simulation]]></Title>	
 				<EnableDeveloperPanel>true</EnableDeveloperPanel>
 				<ShowDeveloperPanelOnStart>false</ShowDeveloperPanelOnStart>
