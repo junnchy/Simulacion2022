@@ -4,6 +4,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+
+
 def main():
     #listado de variables
     estado_servidor = 0
@@ -58,6 +60,7 @@ def main():
     print('q(t)/n: ', q_t/reloj, '\\')
 
 def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr):
+
     if reloj == 0:
         r = genera_random()
         x=-0.70*np.log(r) + reloj
@@ -91,6 +94,7 @@ def event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola,
 
 def evento_arribo(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr):
     print('Ejecutando Arribo')
+
     r = genera_random()
     x=-0.70*np.log(r) + reloj
     ev = ['a', x, len(lista_de_eventos)]
