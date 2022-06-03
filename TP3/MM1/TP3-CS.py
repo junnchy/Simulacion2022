@@ -28,27 +28,34 @@ def main():
     lista_de_eventos.append(evento_actual)
     
     
-    while reloj < 100:
+    while reloj < 500:
     #for i in range(5):
         reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr = timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr)
         reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr = event_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr)
 
-        print('reloj ',reloj)
-        print('Arreglo reloj: ', relojarr)
+        print('reloj ',reloj, '\\')
+        #print('Arreglo reloj: ', relojarr)
         #print(lista_de_eventos)
-        print('evento actual ', evento_actual)
-        print('estado del servidor', estado_servidor)
-        print('Prox ', prox)
-        print('eventos en cola ', cola)
-        print('numeros de clientes en cola', num_cli_cola)
-        print('clientes que completaron su demora en cola', cli_comp_dem_cola)
-        print('Demora total: ', demora_total)
-        print('b(t): ', b_t)
-        print('q(t): ', q_t)
-        print('------------------------------------------------------------------------')
-        
+        print('evento actual ', evento_actual, '\\')
+        print('estado del servidor', estado_servidor, '\\')
+        print('Prox ', prox, '\\')
+        print('eventos en cola ', cola, '\\')
+        print('numeros de clientes en cola', num_cli_cola, '\\')
+        print('clientes que completaron su demora en cola', cli_comp_dem_cola, '\\')
+        print('Demora total: ', demora_total, '\\')
+        print('b(t): ', b_t, '\\')
+        print('q(t): ', q_t, '\\')
+        print('------------------------------------------------------------------------\\')
+
+    cont = 0   
+    for i in lista_de_eventos:
+        if i[0] == 'a':
+            cont += 1
     graf_clicola(relojarr)
     graf_estadoservidor(relojarr)
+    print('cantidad de arribos: ', cont, '\\')
+    print('b(t)/n: ', b_t/reloj, '\\')
+    print('q(t)/n: ', q_t/reloj, '\\')
 
 def timing_routine(reloj, lista_de_eventos, evento_actual, estado_servidor, cola, prox, num_cli_cola, sig_ev, cli_comp_dem_cola, demora_total, q_t, b_t, relojarr):
     if reloj == 0:
@@ -140,7 +147,7 @@ def evento_partida(reloj, lista_de_eventos, evento_actual, estado_servidor, cola
         evento_actual = cola[0]
         cli_comp_dem_cola += 1
         cola = cola[1:len(cola)]
-        demora_total = reloj - evento_actual[1]
+        demora_total += reloj - evento_actual[1]
         num_cli_cola = len(cola)
         r = genera_random()
         x=-0.66*np.log(r) + reloj
@@ -177,8 +184,6 @@ def graf_clicola(relojarr):
                         y.append(relojarr[i][1])
                         x.append(relojarr[i][0])
                         y.append(relojarr[i][1])
-            print(x)
-            print(y)
             plt.plot(x,y)
             plt.title('Clientes en Cola')
             plt.xlabel('Tiempo')
@@ -200,8 +205,6 @@ def graf_estadoservidor(relojarr):
                         y.append(relojarr[i][2])
                         x.append(relojarr[i][0])
                         y.append(relojarr[i][2])
-            print(x)
-            print(y)
             plt.plot(x,y)
             plt.title('Estado del Servidor')
             plt.xlabel('Tiempo')
